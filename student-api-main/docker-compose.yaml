@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    command: "sh -c 'npm install && npm run start:dev'"
+    container_name: aplication-student
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/home/node/app
+  db:
+    build: .docker/postgres
+    container_name: bd-postgres
+    restart: always
+    tty: true
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=school
+    volumes:
+      - .docker/dbdata:/var/lib/postgresql/data
